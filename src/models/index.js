@@ -1,17 +1,7 @@
-import {
-    async
-} from 'regenerator-runtime';
-import {
-    DataTypes
-} from 'sequelize';
-import {
-    sequelize
-} from '../settings';
+import { DataTypes } from 'sequelize';
+import { sequelize } from '../settings';
 
-const opts = {
-    timestamps: true,
-    freezeTableName: true
-}; //Constant with options
+const opts = { timestamps: true, freezeTableName: true };
 
 export const Model = sequelize.define('model', {
     uuid: {
@@ -30,7 +20,7 @@ export const Model = sequelize.define('model', {
     },
 
     price: {
-        type: DataTypes.NUMBER,
+        type: DataTypes.BIGINT,
         defaultValue: 0
     },
 
@@ -56,7 +46,7 @@ export const syncDB = async () => {
 
         await Model.sync({
             logging: false,
-            force: false
+            force: true
         })
         console.info('Model up')
 

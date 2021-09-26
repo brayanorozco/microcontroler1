@@ -1,0 +1,46 @@
+version: "3.5"
+
+services:
+  redis:
+    image: redis:6.2-alpine
+    container_name: redis_microservice
+    restart: always
+        
+    expose: 
+      - 6379
+        
+    networks:
+      - insertmendoza
+
+  db:
+    image: postgres:13-alpine
+    container_name: microservice_db
+    restart: always
+        
+    env_file:
+      - ./enviroment/postgresql.env
+        
+    environment:
+      TZ: "Europe/Spain/Madrid"
+        
+    expose: 
+      - 5432
+        
+    networks:
+      - insertmendoza
+
+  production:
+    image: microservice1:1.0.0
+    container_name: production_microservice
+    restart: always
+        
+    env_file: 
+      - ./enviroment/postgres.env
+      - ./enviroment/redis.env
+
+    networks:
+      - insertmendoza
+
+networks:
+  insertmendoza:
+    name: insertmendoza_new
